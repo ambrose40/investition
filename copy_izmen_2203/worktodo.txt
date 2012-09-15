@@ -1,0 +1,36 @@
+'<!--ќбновление фактических значений в данном проекте, производитс€ каждый раз при запуске карточки на просмотр-->
+  If mdbor.EOF=False Then
+    If Len(mdbor("ProjCode"))>9 and MID(mdbor("ProjCode"),10,2)="00" Then
+      call Update_main_composite(i, "F")
+      call Update_main_composite(i, "C")
+      call Update_main_composite(i, "P")
+    Else
+'<!--ќбновление обновл€ть проектные фактические суммы следует только дл€ карточек проектов существующих после 2004 года-->
+      If CDBL(Mid(proc,1,4))>2004 then
+        va1=Select_sum("DEBET", "04 AND 06", 0)
+        va2=Select_sum("DEBET", "07 AND 09", 0)
+        va3=Select_sum("DEBET", "10 AND 12", 0)
+        va4=Select_sum("DEBET", "01 AND 03", 1)
+
+        vc1=Select_sum("CREDIT", "04 AND 06", 0)
+        vc2=Select_sum("CREDIT", "07 AND 09", 0)
+        vc3=Select_sum("CREDIT", "10 AND 12", 0)
+        vc4=Select_sum("CREDIT", "01 AND 03", 1)
+
+        mdboen.CommandText="UPDATE Main SET Ikvartal=" & CLNG(CDBL(va1)-CDBL(vc1)) & " WHERE Pid='" & mdbor("Pid") & "' AND Enterprise='" & mdbor("Enterprise") & "' AND Yearr='" & Mid(proc,1,4) & "' AND Identifier='F'"
+        mdboren.Open mdboen
+        mdboen.CommandText="UPDATE Main SET IIkvartal=" & CLNG(CDBL(va2)-CDBL(vc2)) & " WHERE Pid='" & mdbor("Pid") & "' AND Enterprise='" & mdbor("Enterprise") & "' AND Yearr='" & Mid(proc,1,4) & "' AND Identifier='F'"
+        mdboren.Open mdboen
+        mdboen.CommandText="UPDATE Main SET IIIkvartal=" & CLNG(CDBL(va3)-CDBL(vc3)) & " WHERE Pid='" & mdbor("Pid") & "' AND Enterprise='" & mdbor("Enterprise") & "' AND Yearr='" & Mid(proc,1,4) & "' AND Identifier='F'"
+        mdboren.Open mdboen
+        mdboen.CommandText="UPDATE Main SET IVkvartal=" & CLNG(CDBL(va4)-CDBL(vc4)) & " WHERE Pid='" & mdbor("Pid") & "' AND Enterprise='" & mdbor("Enterprise") & "' AND Yearr='" & Mid(proc,1,4) & "' AND Identifier='F'"
+        mdboren.Open mdboen
+        mdboren.Close
+      End If
+'<!--ѕодбивка контрактов дл€ обновлени€ суммы по договору-->
+      Call Contract_sum_update("I", "04", "06", 0)
+      Call Contract_sum_update("II", "07", "09", 0)
+      Call Contract_sum_update("III", "10", "12", 0)
+      Call Contract_sum_update("IV", "01", "03", 1)
+    End If
+  End If

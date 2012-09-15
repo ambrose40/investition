@@ -1,0 +1,20 @@
+<Html>
+ <head>
+  <script language="vbscript">
+   Sub submi
+    Dim TheForm
+    Set TheForm = Document.Forms("Forma")
+    if document.forma.texte.value="" then
+    else
+    TheForm.Submit
+    end if
+   End Sub
+  </script>
+ </head>
+ <body>
+  <form name="forma" action="http://intranet/">
+	<input type="text" name="texte"> 
+	<input type="button" name="btn" value="OK?" onclick="submi">
+  </form>
+ </body>
+</Html>

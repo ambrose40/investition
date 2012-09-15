@@ -1,0 +1,9 @@
+7.0
+7
+1 SQLCHAR 0 14 "|" 1 Nr
+2 SQLCHAR 0 255 "|" 2 ProjName
+3 SQLCHAR 0 100 "|" 3 ProjMangr
+4 SQLCHAR 0 2 "|" 4 Levell
+5 SQLCHAR 0 3 "|" 5 Groupe
+6 SQLCHAR 0 16 "|" 6 DatBeg
+7 SQLCHAR 0 16 "\r\n" 7 DatEnd
